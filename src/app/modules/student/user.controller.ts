@@ -31,18 +31,16 @@ import { studentServices } from './user.services';
 //   }
 // };
 
-
 const createUsers = async (req: Request, res: Response) => {
   try {
     const value = req.body;
-    // const result = await UserServices.createUserIntoDB(user);
-    const result = await studentServices.createStudentIntoDB(value);
+    const result = await studentServices.createUserDB(value);
     res.status(200).json({
       success: true,
-      message: 'Created succesfully',
+      message: 'User created successfully!',
       data: result,
     });
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     res.status(500).json({
       success: false,
