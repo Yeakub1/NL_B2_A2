@@ -1,19 +1,6 @@
 import { User } from '../user.modle';
 import { UserOrders, Users } from './user.interface';
 
-// const createUsersDB = async (studentData: Users) => {
-//   // if (await User.isUserExits(studentData.userId)) {
-//   //   throw new Error('User Already Exsist');
-//   // }
-
-//   const result = await User.create(studentData); //build in static method
-//   // const student = new Student(studentData); //create an a instance
-//   // if (await student.isUserExits(studentData.id)) {
-//   //   throw new Error("User Already Exsist")
-//   // }
-//   // const result = await student.save(); // built in instnce method
-//   return result;
-// };
 
 const createUsersDB = async (user: Users) => {
   const result = await User.create(user);

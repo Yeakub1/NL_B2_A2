@@ -2,62 +2,6 @@ import { Request, Response } from 'express';
 import { UserServices } from './user.services';
 import { Users } from './user.interface';
 import userValidationSchema from './user.validation';
-// import userValidationSchema from './user.validation';
-
-// const createUsers = async (req: Request, res: Response) => {
-//   try {
-//     const { student: studentData } = req.body;
-//     const { error, value } = userValidationSchema.validate(studentData);
-//     const result = await studentServices.createUserDB(value);
-
-//     if (error) {
-//       res.status(500).json({
-//         success: false,
-//         message: 'something worng',
-//         error: error.details,
-//       });
-//     }
-
-//     res.status(200).json({
-//       success: true,
-//       message: 'User created successfully!',
-//       data: result,
-//     });
-//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   } catch (error: any) {
-//     res.status(500).json({
-//       success: false,
-//       message: error.message || 'something worng',
-//       error: error,
-//     });
-//   }
-// };
-
-// const createUsers = async (req: Request, res: Response) => {
-//   try {
-//     const userData = req.body;
-//     const { error } = userValidationSchema.validate(userData);
-//     const result = await UserServices.createUserDB(userData);
-//     if (error) {
-//       res.status(500).json({
-//         success: false,
-//         message: 'User created not successfull',
-//         error: error.details,
-//       });
-//     }
-//     res.status(200).json({
-//       success: true,
-//       message: 'User created successfully!',
-//       data: result,
-//     });
-//   } catch (err) {
-//     res.status(500).json({
-//       success: false,
-//       message: 'something went wrong',
-//       error: err,
-//     });
-//   }
-// };
 
 const createUsers = async (req: Request, res: Response) => {
   try {
