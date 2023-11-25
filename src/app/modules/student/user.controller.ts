@@ -3,6 +3,7 @@ import { UserServices } from './user.services';
 import { Users } from './user.interface';
 import userValidationSchema from './user.validation';
 
+// new user create
 const createUsers = async (req: Request, res: Response) => {
   try {
     const userData = req.body;
@@ -21,16 +22,49 @@ const createUsers = async (req: Request, res: Response) => {
       message: 'User created successfully!',
       data: result,
     });
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({
       success: false,
       message: 'Something went wrong',
-      error: err,
+      error: error,
     });
   }
 };
 
+// single user data fetch
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
+    const userId = Number(req.params.userId);
+    const result = await UserServices.getSingleUser(userId);
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'User fetched successfully!',
+        data: result,
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 
+// all users data fetch
 const getAllUsersData = async (req: Request, res: Response) => {
   try {
     const result = await UserServices.getAllUsers();
@@ -48,32 +82,15 @@ const getAllUsersData = async (req: Request, res: Response) => {
   }
 };
 
-const getSingleUser = async (req: Request, res: Response) => {
-  try {
-    const userId: number = Number(req.params.userId);
-    const result = await UserServices.getSingleUser(userId);
-    res.status(200).json({
-      success: true,
-      message: 'Single User fetch Successfully',
-      data: result,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'User not found',
-      error: error,
-    });
-  }
-};
-
+// user delete
 const deleteUser = async (req: Request, res: Response) => {
   try {
     const userId: number = Number(req.params.userId);
     const result = await UserServices.deleteUser(userId);
     res.status(200).json({
       success: true,
-      message: 'User Deleted Successfully!',
-      data: result,
+      message: 'User deleted successfully!',
+      data: result.upsertedId,
     });
   } catch (error) {
     res.status(500).json({
@@ -84,11 +101,13 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
+
+// user data update
 const updateSingleUser = async (req: Request, res: Response) => {
   try {
     const updatedData: Users = req.body;
     const id = Number(req.params.userId);
-    const result = await UserServices.updateUser(updatedData,id);
+    const result = await UserServices.updateUser(updatedData, id);
     res.status(200).json({
       success: true,
       message: 'User Data Updated succesfully',
@@ -115,7 +134,7 @@ const getSingleUserOrdrs = async (req: Request, res: Response) => {
       message: 'Order fetched successfully!',
       data: result,
     });
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -161,7 +180,7 @@ const getUserTotalPrice = async (req: Request, res: Response) => {
         totalPrice: result,
       },
     });
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     res.status(500).json({
       success: false,
@@ -173,8 +192,6 @@ const getUserTotalPrice = async (req: Request, res: Response) => {
     });
   }
 };
-
-
 
 export const usersController = {
   createUser: createUsers,
