@@ -1,7 +1,6 @@
 import { User } from '../user.modle';
 import { UserOrders, Users } from './user.interface';
 
-
 const createUsersDB = async (user: Users) => {
   const result = await User.create(user);
   return result;
@@ -21,7 +20,6 @@ const deleteUserDB = async (userId: number) => {
   const result = await User.updateOne({ userId }, { isDeleted: true });
   return result;
 };
-
 
 const updateUserInToDb = async (updatedData: Users, id: number) => {
   const {
@@ -56,7 +54,7 @@ const updateUserInToDb = async (updatedData: Users, id: number) => {
   return updateUser;
 };
 
-const userOrdersCreateInToDb = async (newOrder: UserOrders, id: number) => {
+const userOrdersList = async (newOrder: UserOrders, id: number) => {
   const result = await User.updateOne(
     { userId: id },
     {
@@ -92,14 +90,13 @@ const userAllOrderPrice = async (userId: number) => {
   return totalPrice;
 };
 
-
 export const UserServices = {
   createUserDB: createUsersDB,
   getAllUsers: getAllUsersDB,
   getSingleUser: getSingleUserDB,
   deleteUser: deleteUserDB,
   updateUser: updateUserInToDb,
-  userOrders: userOrdersCreateInToDb,
+  userOrdersList,
   getUserOrders,
   userAllOrderPrice,
 };

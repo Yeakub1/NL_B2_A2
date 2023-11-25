@@ -11,8 +11,8 @@ import isEmail from 'validator/lib/isEmail';
 import config from '../config';
 
 const userNameSchema = new Schema<UserName>({
-  firstName: {type: String},
-  lastName: {type: String},
+  firstName: { type: String },
+  lastName: { type: String },
 });
 
 const UserAddressSchema = new Schema<UserAddress>({
@@ -48,7 +48,7 @@ const userSchema = new Schema<Users, userModle>({
     },
   },
   isActive: {
-    type: Boolean
+    type: Boolean,
   },
 
   hobbies: { type: [String] },
@@ -65,9 +65,6 @@ const userSchema = new Schema<Users, userModle>({
 
 // pre save middleware/hook
 userSchema.pre('save', async function (next) {
-  // console.log(this, 'pre hook: we will save to data');
-
-  // hassing password and save on DB
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
   user.password = await bcrypt.hash(
@@ -105,14 +102,5 @@ userSchema.methods.toJSON = function () {
     throw new Error(`${error}`);
   }
 };
-
-
-
-
-// creating a cousto intance method
-// userSchema.statics.isUserExits = async function (userId: number) {
-//   const existingUser = await User.findOne({ userId });
-//   return existingUser;
-// };
 
 export const User = model<Users, userModle>('User', userSchema);

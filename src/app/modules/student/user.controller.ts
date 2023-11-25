@@ -101,7 +101,6 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-
 // user data update
 const updateSingleUser = async (req: Request, res: Response) => {
   try {
@@ -125,6 +124,7 @@ const updateSingleUser = async (req: Request, res: Response) => {
   }
 };
 
+// single user oders create
 const getSingleUserOrdrs = async (req: Request, res: Response) => {
   try {
     const userId = Number(req.params.userId);
@@ -147,11 +147,12 @@ const getSingleUserOrdrs = async (req: Request, res: Response) => {
   }
 };
 
+// user order create
 const createOrder = async (req: Request, res: Response) => {
   try {
     const orderId = Number(req.params.userId);
     const newOrder = req.body;
-    await UserServices.userOrders(newOrder, orderId);
+    await UserServices.userOrdersList(newOrder, orderId);
     res.status(200).json({
       success: true,
       message: 'Order created successfully!',
@@ -169,6 +170,7 @@ const createOrder = async (req: Request, res: Response) => {
   }
 };
 
+// get the all user totoal price
 const getUserTotalPrice = async (req: Request, res: Response) => {
   try {
     const userId = Number(req.params.userId);
