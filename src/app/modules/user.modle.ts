@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import validator from 'validator';
 import bcrypt from 'bcrypt';
 import {
   Users,
@@ -12,21 +11,8 @@ import isEmail from 'validator/lib/isEmail';
 import config from '../config';
 
 const userNameSchema = new Schema<UserName>({
-  fristName: {
-    type: String,
-    // required: [true, 'Frist Name is Required'],
-    // maxlength: [20, 'FristName can not be more then 20 careacters'],
-    trim: true,
-  },
-  lastName: {
-    type: String,
-    required: [true, 'Last Name is Required'],
-    validate: {
-      validator: (value: string) => validator.isAlpha(value),
-    },
-    maxlength: [20, 'LastName can not be more then 20 careacters'],
-    message: '{VALUE} is not valid',
-  },
+  firstName: {type: String},
+  lastName: {type: String},
 });
 
 const UserAddressSchema = new Schema<UserAddress>({
@@ -62,8 +48,7 @@ const userSchema = new Schema<Users, userModle>({
     },
   },
   isActive: {
-    type: Boolean,
-    default: true,
+    type: Boolean
   },
 
   hobbies: { type: [String] },
@@ -94,7 +79,6 @@ userSchema.pre('save', async function (next) {
 
 // post save middleware/hook
 userSchema.post('save', function (doc, next) {
-  console.log('post hook: we will after to the save data');
   doc.password = '';
   next();
 });
@@ -109,6 +93,21 @@ userSchema.pre('findOne', function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
+
+userSchema.methods.toJSON = function () {
+  try {
+    const obj = this.toObject();
+    delete obj.password;
+    delete obj._id;
+    delete obj.__v;
+    return obj;
+  } catch (error) {
+    throw new Error(`${error}`);
+  }
+};
+
+
+
 
 // creating a cousto intance method
 // userSchema.statics.isUserExits = async function (userId: number) {

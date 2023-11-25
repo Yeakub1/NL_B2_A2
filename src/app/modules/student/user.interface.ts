@@ -1,7 +1,7 @@
 import { Model } from 'mongoose';
 
 export type UserName = {
-  fristName: string;
+  firstName: string;
   lastName: string;
 };
 
@@ -26,7 +26,7 @@ export type Users = {
   isActive: boolean;
   hobbies: [string];
   address: UserAddress;
-  orders: UserOrders;
+  orders: UserOrders[];
   isDeleted: boolean;
 };
 
